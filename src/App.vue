@@ -4,7 +4,7 @@
       <div class="col-md-7">
         <div class="row">
           <div :key="product.id" class="col-md-6" v-for="product in products">
-            <product :product="product"></product>
+            <product :isInCart="isInCart(product)" :product="product" v-on:add-to-cart="addToCart"></product>
           </div>
         </div>
       </div>
@@ -27,8 +27,23 @@ export default {
   },
   data() {
      return {
-       products
+       products,
+       cart: []
      }
+  },
+  methods: {
+    addToCart(product) {
+
+      this.cart.push(product);
+    },
+    isInCart(product) {
+
+      const item = this.cart.find(item => item.id === product.id);
+      if (item) {
+        return true;
+      }
+      return false;
+    }
   }
 }
 </script>
